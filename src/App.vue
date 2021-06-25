@@ -1,5 +1,5 @@
 <template>
-    <router-view />
+  <router-view v-loading.fullscreen.lock="$store.state.isLoading" />
 </template>
 
 <script>
