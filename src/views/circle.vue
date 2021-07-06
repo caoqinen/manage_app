@@ -51,7 +51,7 @@
           <div v-else>{{scope.row.circleAddress}}</div>
         </template>
       </el-table-column>
-      <el-table-column prop="dateTime" label="时间"></el-table-column>
+      <el-table-column prop="dateTime" label="发布时间"></el-table-column>
       <el-table-column label="状态" width="130">
         <template #default="scope">
           <el-tag v-if="scope.row.lineStatus === '00'" type="primary" disable-transitions>正常</el-tag>
@@ -83,7 +83,13 @@
             </el-col>
             <el-col :span="4">
               <el-tooltip class="item" effect="dark" content="查看" placement="top">
-                <el-button plain type="primary" icon="el-icon-view" size="small" @click="seeLanmu"></el-button>
+                <el-button
+                  plain
+                  type="primary"
+                  icon="el-icon-view"
+                  size="small"
+                  @click="seeLanmu(scope.row)"
+                ></el-button>
               </el-tooltip>
             </el-col>
           </el-row>
@@ -208,6 +214,43 @@
     <el-dialog v-model="dialogVisibleImg">
       <img width="680" :src="dialogImageUrl" alt />
     </el-dialog>
+
+    <!-- imgUrl:[],
+    videoUrl:''-->
+    <el-dialog title="圈子详情" v-model="circle_dialogVisible" width="40%" :before-close="handleClose">
+      <el-input v-model="creator" disabled>
+        <template #prepend>发布者名称:</template>
+      </el-input>
+      <el-input v-model="colum_belong" disabled>
+        <template #prepend>栏目归属:</template>
+      </el-input>
+      <el-input v-model="circleLabel" disabled>
+        <template #prepend>圈子描述:</template>
+      </el-input>
+      <el-input v-model="create_time" disabled>
+        <template #prepend>发布时间:</template>
+      </el-input>
+      <h3 style="margin-bottom: 20px;" :gutter="20" v-if="imgUrl.length > 0">发布内容：</h3>
+      <video
+        v-if="videoUrl.length > 0 && videoUrl.substring(videoUrl.length - 4) == '.mp4'"
+        width="500"
+        height="300"
+        controls
+      >
+        <source :src="videoUrl" type="video/mp4" />
+      </video>
+      <el-row :gutter="20" v-else-if="imgUrl.length > 0">
+        <el-col v-for="item in imgUrl" :key="item.groupId" :span="8" style="margin-bottom: 20px;">
+          <el-image style="width: 150px; height: 150px" :src="item.fileItemLink" fit="fit"></el-image>
+        </el-col>
+      </el-row>
+      <template #footer>
+        <span class="dialog-footer">
+          <!-- <el-button @click="circle_dialogVisible = false">取 消</el-button> -->
+          <el-button type="primary" @click="circle_dialogVisible_close">关 闭</el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -217,10 +260,11 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import { uploadFile, editCircle } from "@/utils/request.js";
+import { uploadFile, editCircle, getCircleDetail } from "@/utils/request.js";
 export default {
   data() {
     return {
+      circle_dialogVisible: false,
       limit: 9,
       headers: {
         Authorization: "",
@@ -268,6 +312,13 @@ export default {
       dialogVisibleImg: false,
       hideUploadAdd: "display:none;",
       hideUploadAdd1: "display:none;", //视频显示
+      url: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+      creator: "",
+      colum_belong: "",
+      circleLabel: "",
+      create_time: "",
+      imgUrl: [],
+      videoUrl: "",
     };
   },
 
@@ -447,8 +498,26 @@ export default {
       // }
     },
 
-    seeLanmu() {
-      this.$message.info("暂未开启");
+    seeLanmu(data) {
+      this.circle_dialogVisible = true;
+      getCircleDetail({ lineId: data.lineId }).then((res) => {
+        this.colum_belong = res.rep.circle[0].lineName;
+        this.creator = res.rep.circle[0].circleBelong[0].lineName;
+        this.circleLabel = res.rep.circle[0].lineDesc;
+        let year = res.rep.circle[0].dateTime.slice(0, 4);
+        let mouth = res.rep.circle[0].dateTime.slice(4, 6);
+        let day = res.rep.circle[0].dateTime.slice(6, 8);
+        let hour = res.rep.circle[0].dateTime.slice(8, 10);
+        let minute = res.rep.circle[0].dateTime.slice(10, 12);
+        this.create_time = `${year}-${mouth}-${day} ${hour}:${minute}`;
+        this.imgUrl = res.rep.circle[0].circleFile;
+        this.videoUrl = res.rep.circle[0].circleFile[0].fileItemLink;
+        // console.log(this.videoUrl);
+      });
+    },
+    circle_dialogVisible_close() {
+      this.circle_dialogVisible = false;
+      this.videoUrl = "";
     },
     search() {
       this.publicListActions({

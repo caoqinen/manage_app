@@ -5,7 +5,7 @@ import {
 } from 'element-plus'
 axios.interceptors.request.use(
   config => {
-    store.commit("setLoading", true);
+    if (config.headers['Resource-Id'] !== '934ca5d4-2c7d-4ae4-86d3-055063eace16' && config.headers['Resource-Id'] !== '7f44fe17-8648-460c-b961-ad7ff6448506' && config.headers['Resource-Id'] !== '98dbaef4-b76a-477a-b2cb-9066b8c3daf7') store.commit("setLoading", true);
     if (localStorage.getItem('token')) {
       config.headers.Authorization = localStorage.getItem('token');
     }
@@ -22,7 +22,7 @@ axios.interceptors.response.use(
   response => {
     if (response.status === 200) {
       store.commit("setLoading", false);
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     } else if (response.status == 200) {
       store.commit("setLoading", false);
@@ -40,16 +40,11 @@ axios.interceptors.response.use(
 
 
 // const baseUrl = "/api";
+// const baseUrl1 = "/api1";
 const baseUrl1 = "/api";
 
 
-/**
- * 登陆
- *  user":"developer",
- *  password":"saluoweiya"
- * @param{ user }用户名
- * @param{ password }密码
- */
+
 
 export const adminLogin = (params) => axios({
   url: baseUrl1 + "/auth/token/user",
@@ -79,7 +74,7 @@ export const menuList = (params) => axios({
   },
   data: params
 })
-//用户补充查询接口
+
 export const supplementary_list = (params) => axios({
   url: baseUrl1 + "/center/resources",
   method: "post",
@@ -92,7 +87,7 @@ export const supplementary_list = (params) => axios({
 
 
 
-// 用户补充查询 修改接口
+
 export const edit_supplementary_list = (params) => axios({
   url: baseUrl1 + "/center/resources",
   method: "post",
@@ -104,7 +99,7 @@ export const edit_supplementary_list = (params) => axios({
 })
 
 
-//栏目 请求从这开始
+
 export const columnList = (params) => axios({
   url: baseUrl1 + "/center/resources",
   method: "post",
@@ -115,7 +110,7 @@ export const columnList = (params) => axios({
   data: params
 })
 
-// titleid 的下拉列表
+
 export const columnSelectList = (params) => axios({
   url: baseUrl1 + "/center/resources",
   method: "post",
@@ -126,7 +121,7 @@ export const columnSelectList = (params) => axios({
   data: params
 })
 
-//栏目删除
+
 export const editColumn = (params) => axios({
   url: baseUrl1 + "/center/resources",
   method: "post",
@@ -137,7 +132,7 @@ export const editColumn = (params) => axios({
   data: params
 })
 
-// 新增栏目
+
 export const uploadCol = (params) => axios({
   url: baseUrl1 + "/center/resources",
   method: "post",
@@ -148,7 +143,7 @@ export const uploadCol = (params) => axios({
   data: params
 })
 
-// 栏目上传背景
+
 export const uploadImg = (params) => axios({
   url: baseUrl1 + "/file/title/updateFileIdByLineId",
   method: "post",
@@ -181,7 +176,7 @@ export const selectList = (params) => axios({
 
 
 
-//圈子更新 删除接口
+
 export const editCircle = (params) => axios({
   url: baseUrl1 + "/center/resources",
   method: "post",
@@ -192,13 +187,109 @@ export const editCircle = (params) => axios({
   data: params
 })
 
-//文件上传
+
 export const uploadFile = (params) => axios({
   url: baseUrl1 + "/file/circle/insert",
   method: "post",
   headers: {
     'Content-Type': 'multipart/form-data',
     "Resource-Id": "f859b248-0ce5-4e28-abf6-a3fd6205bfba",
+  },
+  data: params
+})
+
+
+export const shareCount = (params) => axios({
+  url: baseUrl1 + "/center/resources",
+  method: "post",
+  headers: {
+    'Content-Type': 'application/json',
+    "Resource-Id": "934ca5d4-2c7d-4ae4-86d3-055063eace16"
+  },
+  data: params
+})
+
+
+export const redCount = (params) => axios({
+  url: baseUrl1 + "/center/resources",
+  method: "post",
+  headers: {
+    'Content-Type': 'application/json',
+    "Resource-Id": "7f44fe17-8648-460c-b961-ad7ff6448506"
+  },
+  data: params
+})
+
+
+
+export const getVipType = (params) => axios({
+  url: baseUrl1 + "/center/resources",
+  method: "post",
+  headers: {
+    'Content-Type': 'application/json',
+    "Resource-Id": "21ea2335-3a76-4618-ace7-171af542077f"
+  },
+  data: params
+})
+
+
+export const openVip = (params) => axios({
+  url: baseUrl1 + "/center/resources",
+  method: "post",
+  headers: {
+    'Content-Type': 'application/json',
+    "Resource-Id": "650cd736-f32e-447e-b471-5c6620977562"
+  },
+  data: params
+})
+
+
+export const getCircleDetail = (params) => axios({
+  url: baseUrl1 + "/center/resources",
+  method: "post",
+  headers: {
+    'Content-Type': 'application/json',
+    "Resource-Id": "838179f3-7103-4f8b-adc1-06321c597cd9"
+  },
+  data: params
+})
+
+
+export const getAppActive = (params) => axios({
+  url: baseUrl1 + "/center/resources",
+  method: "post",
+  headers: {
+    'Content-Type': 'application/json',
+    "Resource-Id": "38b0f772-ba44-41ad-80ba-ad3cc0a2a6ab"
+  },
+  data: params
+})
+
+
+/**
+ * 查看个人邀请记录
+ * @param{ daysAgo } 前n天
+ * @param{ daysNow } 到今天
+ * @param{ start } 开始
+ * @param{ length } 条数
+ * @param{ userId } 当前用户lineid  不传默认所有
+ */
+export const getInvitation_list = (params) => axios({
+  url: baseUrl1 + "/center/resources",
+  method: "post",
+  headers: {
+    'Content-Type': 'application/json',
+    "Resource-Id": "22953ec1-86d7-493e-9b9c-f7d47ddeaee8"
+  },
+  data: params
+})
+
+export const getInvitation = (params) => axios({
+  url: baseUrl1 + "/center/resources",
+  method: "post",
+  headers: {
+    'Content-Type': 'application/json',
+    "Resource-Id": "98dbaef4-b76a-477a-b2cb-9066b8c3daf7"
   },
   data: params
 })

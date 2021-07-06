@@ -18,6 +18,7 @@ import column from "./modules/column"
 import columnSelect from "./modules/columnSelect"
 import circle from "./modules/circle"
 import selectList from "./modules/selectList"
+import invitationList from './modules/invitationManage'
 
 
 export default createStore({
@@ -31,6 +32,7 @@ export default createStore({
     column,
     columnSelect,
     circle,
-    selectList
+    selectList,
+    invitationList
   }
 })

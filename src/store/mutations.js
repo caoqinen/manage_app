@@ -2,7 +2,7 @@
 export const state = {
   isLoading: false,
   tagsList: [],
-  collapse: true //true default open
+  collapse: true
 
 } //请求加载状态
 

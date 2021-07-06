@@ -4,7 +4,9 @@ import {
     createWebHashHistory
 } from "vue-router";
 import Home from "../views/Home.vue";
-
+import {
+    ElMessage
+} from 'element-plus'
 const routes = [{
     path: '/',
     redirect: '/ed514176'
@@ -33,6 +35,13 @@ const routes = [{
             title: '会员管理'
         },
         component: () => import('@/views/member')
+    }, {
+        path: "/d34481c6",
+        name: "用户邀请管理",
+        meta: {
+            title: '用户邀请管理'
+        },
+        component: () => import('@/views/invitationManage')
     }, {
         path: "/45213e68",
         name: "栏目管理",
@@ -166,11 +175,10 @@ router.beforeEach((to, from, next) => {
     const role = localStorage.getItem('user');
     if (!role && to.path !== '/login') {
         next('/login');
-    } else if (to.meta.permission) {
-        // 如果是管理员权限则可进入，这里只是简单的模拟管理员权限而已
-        role === 'developer' ?
+    } else if (to.meta.title == "会员管理") {
+        role === '377e9ed0-3a55-4cd6-aaf6-2cf1a2935613' ?
             next() :
-            next();
+            ElMessage.error('暂无权限,联系管理员开通');
     } else {
         next();
     }

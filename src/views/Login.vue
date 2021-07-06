@@ -54,16 +54,26 @@ export default {
   },
   methods: {
     async submitForm() {
+      if (!this.param.user) {
+        this.$message.error("请输入用户名");
+        return;
+      }
       let result = await adminLogin(this.param);
       if (result.result.code.code != "0000")
         this.$message.error(result.result.code.massage);
       let { token, user } = result.rep;
       getUserInfo({ groupId: user }).then((res) => {
-        localStorage.setItem("token", token);
-        localStorage.setItem("user", user);
-        localStorage.setItem("userInfo", JSON.stringify(res.rep.userAbout[0]));
-        this.$message.success("登录成功");
-        this.$router.push("/");
+        // console.log(res);
+        if (res.rep.userAbout.length >= 1) {
+          localStorage.setItem("token", token);
+          localStorage.setItem("user", user);
+          localStorage.setItem(
+            "userInfo",
+            JSON.stringify(res.rep.userAbout[0])
+          );
+          this.$message.success("登录成功");
+          this.$router.push("/");
+        } else this.$message.error("获取用户信息失败");
       });
     },
   },
