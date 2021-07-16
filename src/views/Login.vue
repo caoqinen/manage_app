@@ -2,7 +2,13 @@
   <div class="login-wrap">
     <div class="ms-login">
       <div class="ms-title">后台管理系统</div>
-      <el-form :model="param" :rules="rules" ref="login" label-width="0px" class="ms-content">
+      <el-form
+        :model="param"
+        :rules="rules"
+        ref="login"
+        label-width="0px"
+        class="ms-content"
+      >
         <el-form-item prop="user">
           <el-input v-model="param.user" placeholder="请输入用户名">
             <template #prepend>
@@ -65,9 +71,9 @@ export default {
       getUserInfo({ groupId: user }).then((res) => {
         // console.log(res);
         if (res.rep.userAbout.length >= 1) {
-          localStorage.setItem("token", token);
-          localStorage.setItem("user", user);
-          localStorage.setItem(
+          sessionStorage.setItem("token", token);
+          sessionStorage.setItem("user", user);
+          sessionStorage.setItem(
             "userInfo",
             JSON.stringify(res.rep.userAbout[0])
           );

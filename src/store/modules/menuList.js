@@ -9,10 +9,8 @@ const state = {
 
 const mutations = {
   changemenuList(state, data) {
-    // console.log(data);
     state.List = data
   },
-
 }
 
 
@@ -25,13 +23,15 @@ const actions = {
       if (res.result.code.code === "0000") {
         let leftMenu = res.rep.menu;
         // console.log(leftMenu);
+        sessionStorage.setItem("leftMenu", JSON.stringify(leftMenu));
         context.commit("changemenuList", leftMenu)
       }
     });
+  },
+
+  getSessionStore(context, params) {
+    context.commit("changemenuList", params)
   }
-
-
-
 }
 
 

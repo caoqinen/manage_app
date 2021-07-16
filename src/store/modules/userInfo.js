@@ -12,7 +12,7 @@ const mutations = {
 
 const actions = {
   getUsername(context) {
-    let username = localStorage.getItem('username')
+    let username = sessionStorage.getItem('username')
     context.commit("changeUsername", username)
   }
 }

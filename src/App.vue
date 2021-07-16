@@ -16,4 +16,6 @@ export default {
 <style>
 @import "./assets/css/main.css";
 @import "./assets/css/color-dark.css";
+@import "./assets/css/custom.css";
+@import "./assets/css/scrollbar.css";
 </style>

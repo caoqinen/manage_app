@@ -50,7 +50,9 @@
               :index="subItem.timeStamp"
               :key="subItem.timeStamp"
             >
-              <el-menu-item :index="subItem.viewPath">{{ subItem.lineName }}</el-menu-item>
+              <el-menu-item :index="subItem.viewPath">{{
+                subItem.lineName
+              }}</el-menu-item>
             </template>
           </el-submenu>
         </template>
@@ -158,7 +160,8 @@ export default {
     };
   },
   mounted() {
-    this.menuListActions();
+    if (!sessionStorage.getItem("leftMenu")) this.menuListActions();
+    else this.getSessionStore(JSON.parse(sessionStorage.getItem("leftMenu")));
   },
   computed: {
     onRoutes() {
@@ -174,6 +177,7 @@ export default {
   methods: {
     ...mapActions({
       menuListActions: "menuList/menuListActions",
+      getSessionStore: "menuList/getSessionStore",
     }),
   },
 };
@@ -192,7 +196,7 @@ export default {
   width: 0;
 }
 .sidebar-el-menu:not(.el-menu--collapse) {
-  width: 250px;
+  width: 220px;
 }
 .sidebar > ul {
   height: 100%;

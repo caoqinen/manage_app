@@ -1,13 +1,14 @@
 import axios from 'axios';
-// import store from "@/store";
+import store from "@/store";
 import {
   ElMessage
 } from 'element-plus'
-import Nprogress from "nprogress"
-import 'nprogress/nprogress.css'
+// import Nprogress from "nprogress"
+// import 'nprogress/nprogress.css'
 axios.interceptors.request.use(
   config => {
-    if (config.headers['Resource-Id'] !== '934ca5d4-2c7d-4ae4-86d3-055063eace16' && config.headers['Resource-Id'] !== '7f44fe17-8648-460c-b961-ad7ff6448506' && config.headers['Resource-Id'] !== '98dbaef4-b76a-477a-b2cb-9066b8c3daf7') Nprogress.start()
+    //Nprogress.start()
+    if (config.headers['Resource-Id'] !== '934ca5d4-2c7d-4ae4-86d3-055063eace16' && config.headers['Resource-Id'] !== '7f44fe17-8648-460c-b961-ad7ff6448506' && config.headers['Resource-Id'] !== '98dbaef4-b76a-477a-b2cb-9066b8c3daf7') store.commit("setLoading", true);
     if (sessionStorage.getItem('token')) {
       config.headers.Authorization = sessionStorage.getItem('token');
     }
@@ -15,8 +16,7 @@ axios.interceptors.request.use(
   },
   error => {
     console.log(error);
-    // store.commit("setLoading", false);
-    Nprogress.start().done()
+    store.commit("setLoading", false);
     return Promise.reject();
   }
 );
@@ -24,22 +24,20 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   response => {
     if (response.status === 200) {
-      Nprogress.start().done()
-      // store.commit("setLoading", false);
+      // Nprogress.start().done()
+      store.commit("setLoading", false);
       // console.log(response.data);
       return response.data;
     } else if (response.status == 200) {
-      // store.commit("setLoading", false);
-      Nprogress.start().done()
+      store.commit("setLoading", false);
       ElMessage.success(response.data.result.code.massage)
       Promise.reject();
     }
   },
   error => {
     console.log(error);
-    // store.commit("setLoading", false);
+    store.commit("setLoading", false);
     ElMessage.error('请联系管理员')
-    Nprogress.start().done()
     return Promise.reject();
   }
 );

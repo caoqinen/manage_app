@@ -3,14 +3,17 @@
     <!-- 折叠按钮 -->
     <div class="collapse-btn" @click="collapseChage">
       <i :class="!collapse ? 'el-icon-s-fold' : 'el-icon-s-unfold'"></i>
-      <!-- <i v-else class="el-icon-s-unfold"></i> -->
     </div>
     <div class="logo">后台管理系统</div>
     <div class="header-right">
       <div class="header-user-con">
         <!-- 消息中心 -->
         <div class="btn-bell">
-          <el-tooltip effect="dark" :content="message?`有${message}条未读消息`:`消息中心`" placement="bottom">
+          <el-tooltip
+            effect="dark"
+            :content="message ? `有${message}条未读消息` : `消息中心`"
+            placement="bottom"
+          >
             <router-link to="/tabs">
               <i class="el-icon-bell"></i>
             </router-link>
@@ -24,7 +27,7 @@
         <!-- 用户名下拉菜单 -->
         <el-dropdown class="user-name" trigger="click" @command="handleCommand">
           <span class="el-dropdown-link">
-            {{username}}
+            {{ username }}
             <i class="el-icon-caret-bottom"></i>
           </span>
           <template #dropdown>
@@ -50,11 +53,11 @@ export default {
   },
   computed: {
     username() {
-      let username = JSON.parse(localStorage.getItem("userInfo"));
+      let username = JSON.parse(sessionStorage.getItem("userInfo"));
       return username ? username.lineName : this.name;
     },
     userphoto() {
-      let userphoto = JSON.parse(localStorage.getItem("userInfo"));
+      let userphoto = JSON.parse(sessionStorage.getItem("userInfo"));
       return userphoto ? userphoto.photo : this.photo;
     },
     collapse() {
@@ -65,7 +68,7 @@ export default {
     // 用户名下拉菜单选择事件
     handleCommand(command) {
       if (command == "loginout") {
-        localStorage.clear();
+        sessionStorage.clear();
         this.$message.success("退出登陆");
         this.$router.push("/login");
       }
@@ -76,9 +79,9 @@ export default {
     },
   },
   mounted() {
-    if (document.body.clientWidth < 1500) {
-      this.collapseChage();
-    }
+    // if (document.body.clientWidth < 1500) {
+    //   this.collapseChage();
+    // }
   },
 };
 </script>

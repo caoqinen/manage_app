@@ -21,7 +21,13 @@
           ></el-input>
         </el-col>
         <el-col :span="5">
-          <el-select v-model="value" filterable clearable placeholder="请选择" @focus="change">
+          <el-select
+            v-model="value"
+            filterable
+            clearable
+            placeholder="请选择"
+            @focus="change"
+          >
             <el-option
               v-for="item in seleList"
               :key="item.lineId"
@@ -31,13 +37,21 @@
           </el-select>
         </el-col>
         <el-col :span="9">
-          <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
+          <el-button type="primary" icon="el-icon-search" @click="search"
+            >搜索</el-button
+          >
           <el-button
             type="primary"
             icon="el-icon-circle-plus-outline"
             @click="dialogVisible1 = true"
-          >新增</el-button>
-          <el-button type="primary" icon="el-icon-refresh-left" @click="searchAll">全部</el-button>
+            >新增</el-button
+          >
+          <el-button
+            type="primary"
+            icon="el-icon-refresh-left"
+            @click="searchAll"
+            >全部</el-button
+          >
         </el-col>
       </el-row>
     </div>
@@ -48,13 +62,18 @@
       <el-table-column prop="circleAddress" label="位置">
         <template #default="scope">
           <div v-if="!scope.row.circleAddress">无</div>
-          <div v-else>{{scope.row.circleAddress}}</div>
+          <div v-else>{{ scope.row.circleAddress }}</div>
         </template>
       </el-table-column>
       <el-table-column prop="dateTime" label="发布时间"></el-table-column>
       <el-table-column label="状态" width="130">
         <template #default="scope">
-          <el-tag v-if="scope.row.lineStatus === '00'" type="primary" disable-transitions>正常</el-tag>
+          <el-tag
+            v-if="scope.row.lineStatus === '00'"
+            type="primary"
+            disable-transitions
+            >正常</el-tag
+          >
           <el-tag v-else type="danger" disable-transitions>已删除</el-tag>
         </template>
       </el-table-column>
@@ -62,7 +81,12 @@
         <template #default="scope">
           <el-row :gutter="20">
             <el-col :span="5">
-              <el-tooltip class="item" effect="dark" content="编辑内容" placement="top">
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="编辑内容"
+                placement="top"
+              >
                 <el-button
                   type="primary"
                   icon="el-icon-edit"
@@ -72,7 +96,12 @@
               </el-tooltip>
             </el-col>
             <el-col :span="5">
-              <el-tooltip class="item" effect="dark" content="删除" placement="top">
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="删除"
+                placement="top"
+              >
                 <el-button
                   type="danger"
                   icon="el-icon-delete"
@@ -82,7 +111,12 @@
               </el-tooltip>
             </el-col>
             <el-col :span="4">
-              <el-tooltip class="item" effect="dark" content="查看" placement="top">
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="查看"
+                placement="top"
+              >
                 <el-button
                   plain
                   type="primary"
@@ -109,31 +143,55 @@
       ></el-pagination>
     </div>
     <!-- 弹框 -->
-    <el-dialog title="编辑修改" v-model="dialogVisible" width="40%" :before-close="handleClose">
-      <el-input placeholder="圈子名称" v-model="dialogData.lineName" class="handle-input mr10"></el-input>
-      <el-input placeholder="圈子描述" v-model="dialogData.lineDesc" class="handle-input mr10"></el-input>
+    <el-dialog
+      title="编辑修改"
+      v-model="dialogVisible"
+      width="40%"
+      :before-close="handleClose"
+    >
+      <el-input
+        placeholder="圈子名称"
+        v-model="dialogData.lineName"
+        class="handle-input mr10"
+      ></el-input>
+      <el-input
+        placeholder="圈子描述"
+        v-model="dialogData.lineDesc"
+        class="handle-input mr10"
+      ></el-input>
       <el-input
         placeholder="圈子类型"
         v-model="dialogData.circleType"
         disabled
         class="handle-input mr10"
       ></el-input>
-      <el-input placeholder="位置" v-model="dialogData.circleAddress" class="handle-input mr10"></el-input>
+      <el-input
+        placeholder="位置"
+        v-model="dialogData.circleAddress"
+        class="handle-input mr10"
+      ></el-input>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogVisible1_method">确 定</el-button>
+          <el-button type="primary" @click="dialogVisible1_method"
+            >确 定</el-button
+          >
         </span>
       </template>
     </el-dialog>
 
-    <el-dialog title="新增圈子" v-model="dialogVisible1" width="40%" :before-close="handleClose">
+    <el-dialog
+      title="新增圈子"
+      v-model="dialogVisible1"
+      width="40%"
+      :before-close="handleClose"
+    >
       <!-- <el-input placeholder="栏目名称" v-model="imgData.name" class="handle-input mr10"></el-input> -->
       <el-select
         v-model="imgData.titleId"
         filterable
         placeholder="栏目名称"
-        style="width:100%;"
+        style="width: 100%"
         disabled
       >
         <el-option
@@ -143,14 +201,18 @@
           :value="item.lineId"
         ></el-option>
       </el-select>
-      <el-input placeholder="圈子描述" v-model="imgData.desc" class="handle-input mr10"></el-input>
+      <el-input
+        placeholder="圈子描述"
+        v-model="imgData.desc"
+        class="handle-input mr10"
+      ></el-input>
       <el-select
         v-model="imgData.titleId"
         filterable
         allow-create
         clearable
         placeholder="请选择栏目"
-        style="width:100%;"
+        style="width: 100%"
         @focus="change"
       >
         <el-option
@@ -160,7 +222,11 @@
           :value="item.lineId"
         ></el-option>
       </el-select>
-      <el-input placeholder="位置" v-model="imgData.address" class="handle-input mr10"></el-input>
+      <el-input
+        placeholder="位置"
+        v-model="imgData.address"
+        class="handle-input mr10"
+      ></el-input>
       <!-- <el-button type="primary" @click="uploadBtn(true)">上传视频</el-button>
       <el-button type="success" @click="uploadBtn(false)">上传图片</el-button>-->
       <!-- 图片上传 -->
@@ -185,11 +251,14 @@
         <template #default>
           <i class="el-icon-plus"></i>
         </template>
-        <template #file="{file}">
+        <template #file="{ file }">
           <div>
             <img class="el-upload-list__item-thumbnail" :src="file.url" alt />
             <span class="el-upload-list__item-actions">
-              <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
+              <span
+                class="el-upload-list__item-preview"
+                @click="handlePictureCardPreview(file)"
+              >
                 <i class="el-icon-zoom-in"></i>
               </span>
               <span
@@ -206,7 +275,9 @@
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible1 = false">取 消</el-button>
-          <el-button type="primary" @click="dialogVisible3_method">确 定</el-button>
+          <el-button type="primary" @click="dialogVisible3_method"
+            >确 定</el-button
+          >
         </span>
       </template>
     </el-dialog>
@@ -217,7 +288,12 @@
 
     <!-- imgUrl:[],
     videoUrl:''-->
-    <el-dialog title="圈子详情" v-model="circle_dialogVisible" width="40%" :before-close="handleClose">
+    <el-dialog
+      title="圈子详情"
+      v-model="circle_dialogVisible"
+      width="40%"
+      :before-close="handleClose"
+    >
       <el-input v-model="creator" disabled>
         <template #prepend>发布者名称:</template>
       </el-input>
@@ -230,9 +306,14 @@
       <el-input v-model="create_time" disabled>
         <template #prepend>发布时间:</template>
       </el-input>
-      <h3 style="margin-bottom: 20px;" :gutter="20" v-if="imgUrl.length > 0">发布内容：</h3>
+      <h3 style="margin-bottom: 20px" :gutter="20" v-if="imgUrl.length > 0">
+        发布内容：
+      </h3>
       <video
-        v-if="videoUrl.length > 0 && videoUrl.substring(videoUrl.length - 4) == '.mp4'"
+        v-if="
+          videoUrl.length > 0 &&
+          videoUrl.substring(videoUrl.length - 4) == '.mp4'
+        "
         width="500"
         height="300"
         controls
@@ -240,14 +321,25 @@
         <source :src="videoUrl" type="video/mp4" />
       </video>
       <el-row :gutter="20" v-else-if="imgUrl.length > 0">
-        <el-col v-for="item in imgUrl" :key="item.groupId" :span="8" style="margin-bottom: 20px;">
-          <el-image style="width: 150px; height: 150px" :src="item.fileItemLink" fit="fit"></el-image>
+        <el-col
+          v-for="item in imgUrl"
+          :key="item.groupId"
+          :span="8"
+          style="margin-bottom: 20px"
+        >
+          <el-image
+            style="width: 150px; height: 150px"
+            :src="item.fileItemLink"
+            fit="fit"
+          ></el-image>
         </el-col>
       </el-row>
       <template #footer>
         <span class="dialog-footer">
           <!-- <el-button @click="circle_dialogVisible = false">取 消</el-button> -->
-          <el-button type="primary" @click="circle_dialogVisible_close">关 闭</el-button>
+          <el-button type="primary" @click="circle_dialogVisible_close"
+            >关 闭</el-button
+          >
         </span>
       </template>
     </el-dialog>
@@ -433,9 +525,9 @@ export default {
       this.dialogVisible2 = true;
       this.imgData = {
         lineId: data.lineId,
-        belong: localStorage.getItem("user"),
+        belong: sessionStorage.getItem("user"),
       };
-      this.headers.Authorization = localStorage.getItem("token");
+      this.headers.Authorization = sessionStorage.getItem("token");
     },
     //save edit
     dialogVisible1_method() {
@@ -466,7 +558,7 @@ export default {
       formData.append("name", this.imgData.name);
       formData.append("desc", this.imgData.desc);
       formData.append("titleId", this.imgData.titleId);
-      formData.append("belong", localStorage.getItem("user"));
+      formData.append("belong", sessionStorage.getItem("user"));
       formData.append("type", "General");
       formData.append("region", "circle");
       formData.append("lat", "1");
@@ -482,7 +574,7 @@ export default {
             this.imgData = {
               name: "",
               desc: "",
-              belong: localStorage.getItem("user"),
+              belong: sessionStorage.getItem("user"),
               type: "General",
               titleId: "",
               region: "",

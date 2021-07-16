@@ -3,7 +3,12 @@
     <div class="handle-box">
       <el-row :gutter="20">
         <el-col :span="5">
-          <el-input placeholder="栏目名称" v-model="lineName" clearable class="handle-input mr10"></el-input>
+          <el-input
+            placeholder="栏目名称"
+            v-model="lineName"
+            clearable
+            class="handle-input mr10"
+          ></el-input>
         </el-col>
         <el-col :span="5">
           <el-input
@@ -15,7 +20,13 @@
           ></el-input>
         </el-col>
         <el-col :span="5">
-          <el-select v-model="value" filterable clearable placeholder="请选择" @focus="change">
+          <el-select
+            v-model="value"
+            filterable
+            clearable
+            placeholder="请选择"
+            @focus="change"
+          >
             <el-option
               v-for="item in colSelectList.arr"
               :key="item.index"
@@ -25,13 +36,21 @@
           </el-select>
         </el-col>
         <el-col :span="9">
-          <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
+          <el-button type="primary" icon="el-icon-search" @click="search"
+            >搜索</el-button
+          >
           <el-button
             type="primary"
             icon="el-icon-circle-plus-outline"
             @click="dialogVisible1 = true"
-          >新增</el-button>
-          <el-button type="primary" icon="el-icon-refresh-left" @click="searchAll">全部</el-button>
+            >新增</el-button
+          >
+          <el-button
+            type="primary"
+            icon="el-icon-refresh-left"
+            @click="searchAll"
+            >全部</el-button
+          >
         </el-col>
       </el-row>
     </div>
@@ -42,13 +61,18 @@
       <el-table-column prop="titleAddress" label="位置">
         <template #default="scope">
           <div v-if="!scope.row.titleAddress">无</div>
-          <div v-else>{{scope.row.titleAddress}}</div>
+          <div v-else>{{ scope.row.titleAddress }}</div>
         </template>
       </el-table-column>
       <el-table-column prop="dateTime" label="时间"></el-table-column>
       <el-table-column label="状态" width="130">
         <template #default="scope">
-          <el-tag v-if="scope.row.lineStatus === '00'" type="primary" disable-transitions>正常</el-tag>
+          <el-tag
+            v-if="scope.row.lineStatus === '00'"
+            type="primary"
+            disable-transitions
+            >正常</el-tag
+          >
           <el-tag v-else type="danger" disable-transitions>已删除</el-tag>
         </template>
       </el-table-column>
@@ -56,7 +80,12 @@
         <template #default="scope">
           <el-row :gutter="20">
             <el-col :span="5">
-              <el-tooltip class="item" effect="dark" content="编辑内容" placement="top">
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="编辑内容"
+                placement="top"
+              >
                 <el-button
                   type="primary"
                   icon="el-icon-edit"
@@ -66,15 +95,29 @@
               </el-tooltip>
             </el-col>
             <el-col :span="8">
-              <el-tooltip class="item" effect="dark" content="上传背景图" placement="top">
-                <el-button type="primary" size="small" @click="uploadImg(scope.row)">
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="上传背景图"
+                placement="top"
+              >
+                <el-button
+                  type="primary"
+                  size="small"
+                  @click="uploadImg(scope.row)"
+                >
                   上传
                   <i class="el-icon-upload el-icon--right"></i>
                 </el-button>
               </el-tooltip>
             </el-col>
             <el-col :span="5">
-              <el-tooltip class="item" effect="dark" content="删除" placement="top">
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="删除"
+                placement="top"
+              >
                 <el-button
                   type="danger"
                   icon="el-icon-delete"
@@ -84,8 +127,19 @@
               </el-tooltip>
             </el-col>
             <el-col :span="4">
-              <el-tooltip class="item" effect="dark" content="查看" placement="top">
-                <el-button plain type="primary" icon="el-icon-view" size="small" @click="seeLanmu"></el-button>
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="查看"
+                placement="top"
+              >
+                <el-button
+                  plain
+                  type="primary"
+                  icon="el-icon-view"
+                  size="small"
+                  @click="seeLanmu"
+                ></el-button>
               </el-tooltip>
             </el-col>
           </el-row>
@@ -105,33 +159,65 @@
       ></el-pagination>
     </div>
     <!-- 弹框 -->
-    <el-dialog title="编辑修改" v-model="dialogVisible" width="40%" :before-close="handleClose">
-      <el-input placeholder="栏目名称" v-model="dialogData.lineName" class="handle-input mr10"></el-input>
-      <el-input placeholder="栏目描述" v-model="dialogData.lineDesc" class="handle-input mr10"></el-input>
+    <el-dialog
+      title="编辑修改"
+      v-model="dialogVisible"
+      width="40%"
+      :before-close="handleClose"
+    >
+      <el-input
+        placeholder="栏目名称"
+        v-model="dialogData.lineName"
+        class="handle-input mr10"
+      ></el-input>
+      <el-input
+        placeholder="栏目描述"
+        v-model="dialogData.lineDesc"
+        class="handle-input mr10"
+      ></el-input>
       <el-input
         placeholder="栏目类型"
         v-model="dialogData.titleType"
         disabled
         class="handle-input mr10"
       ></el-input>
-      <el-input placeholder="位置" v-model="dialogData.titleAddress" class="handle-input mr10"></el-input>
+      <el-input
+        placeholder="位置"
+        v-model="dialogData.titleAddress"
+        class="handle-input mr10"
+      ></el-input>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogVisible1_method">确 定</el-button>
+          <el-button type="primary" @click="dialogVisible1_method"
+            >确 定</el-button
+          >
         </span>
       </template>
     </el-dialog>
 
-    <el-dialog title="新增栏目" v-model="dialogVisible1" width="40%" :before-close="handleClose">
-      <el-input placeholder="栏目名称" v-model="dialogData1.lineName" class="handle-input mr10"></el-input>
-      <el-input placeholder="栏目描述" v-model="dialogData1.lineDesc" class="handle-input mr10"></el-input>
+    <el-dialog
+      title="新增栏目"
+      v-model="dialogVisible1"
+      width="40%"
+      :before-close="handleClose"
+    >
+      <el-input
+        placeholder="栏目名称"
+        v-model="dialogData1.lineName"
+        class="handle-input mr10"
+      ></el-input>
+      <el-input
+        placeholder="栏目描述"
+        v-model="dialogData1.lineDesc"
+        class="handle-input mr10"
+      ></el-input>
       <el-select
         v-model="dialogData1.titleType"
         filterable
         clearable
         placeholder="请选择"
-        style="width:100%;"
+        style="width: 100%"
       >
         <el-option
           v-for="item in xinzenglanmu"
@@ -140,16 +226,27 @@
           :value="item.value"
         ></el-option>
       </el-select>
-      <el-input placeholder="位置" v-model="dialogData1.titleAddress" class="handle-input mr10"></el-input>
+      <el-input
+        placeholder="位置"
+        v-model="dialogData1.titleAddress"
+        class="handle-input mr10"
+      ></el-input>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible1 = false">取 消</el-button>
-          <el-button type="primary" @click="dialogVisible2_method">确 定</el-button>
+          <el-button type="primary" @click="dialogVisible2_method"
+            >确 定</el-button
+          >
         </span>
       </template>
     </el-dialog>
 
-    <el-dialog title="上传背景图" v-model="dialogVisible2" width="40%" :before-close="handleClose">
+    <el-dialog
+      title="上传背景图"
+      v-model="dialogVisible2"
+      width="40%"
+      :before-close="handleClose"
+    >
       <el-upload
         :headers="headers"
         :data="imgData"
@@ -182,7 +279,9 @@
         <span class="dialog-footer">
           <el-button @click="dialogVisible2 = false">取 消</el-button>
           <!-- @click="submitUpload" -->
-          <el-button type="primary" @click="dialogVisible3_method">上 传</el-button>
+          <el-button type="primary" @click="dialogVisible3_method"
+            >上 传</el-button
+          >
         </span>
       </template>
     </el-dialog>
@@ -313,9 +412,9 @@ export default {
       this.dialogVisible2 = true;
       this.imgData = {
         lineId: data.lineId,
-        belong: localStorage.getItem("user"),
+        belong: sessionStorage.getItem("user"),
       };
-      this.headers.Authorization = localStorage.getItem("token");
+      this.headers.Authorization = sessionStorage.getItem("token");
     },
     //save edit
     dialogVisible1_method() {
@@ -330,7 +429,7 @@ export default {
     //add  edit
     dialogVisible2_method() {
       this.dialogVisible1 = false;
-      this.dialogData1.titleBelong = localStorage.getItem("user");
+      this.dialogData1.titleBelong = sessionStorage.getItem("user");
       uploadCol(this.dialogData1).then((res) => {
         if (res.result.code.code === "0000") {
           this.init();

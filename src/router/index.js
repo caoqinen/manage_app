@@ -171,8 +171,8 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    document.title = `${to.meta.title}`;
-    const role = localStorage.getItem('user');
+    // document.title = `${to.meta.title}`;
+    const role = sessionStorage.getItem('user');
     if (!role && to.path !== '/login') {
         next('/login');
     } else if (to.meta.title == "会员管理") {
