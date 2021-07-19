@@ -9,6 +9,8 @@ import store from './store'
 import installElementPlus from './plugins/element'
 import './assets/css/icon.css'
 // Vue.prototype.$echarts = echarts
+import 'animate.css'
+
 
 const app = createApp(App)
 installElementPlus(app)

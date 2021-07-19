@@ -185,6 +185,7 @@ export default {
   async mounted() {
     shareCount({ daysAgo: 0, daysNow: 0 }).then((res) => {
       this.homeTotalData[2].value = res.rep.userAboutCount[0].userAboutCount;
+      // console.log(res.rep.userAboutCount[0].userAboutCount);
       // 活跃人数暂时用随机数
       this.homeTotalData[1].value = Math.floor(
         Math.random() * (100 - this.homeTotalData[2].value) +
@@ -211,6 +212,11 @@ export default {
       .then((res) => {
         if (res.result.code.code == "0000")
           this.homeTotalData[1].value1 = res.rep.userAbout.length;
+        // 活跃人数暂时用随机数
+        // this.homeTotalData[1].value = Math.floor(
+        //   Math.random() * (100 - this.homeTotalData[2].value) +
+        //     this.homeTotalData[2].value
+        // );
       })
       .catch(() => {
         this.$message.error("在线人数获取失败,刷新后重试!");
@@ -222,6 +228,7 @@ export default {
       start: 0,
       length: 10000,
     }).then((res) => {
+      // 暂时
       this.homeTotalData[3].value = res.rep.userAboutCount[0];
     });
 

@@ -1,9 +1,17 @@
 <template>
+  <!-- <v-app> -->
   <router-view v-loading.fullscreen.lock="$store.state.isLoading" />
+  <!-- </v-app> -->
 </template>
 
 <script>
 export default {
+  // updated() {
+  //   const dom = document.getElementById("loading");
+  //   if (dom) {
+  //     dom.remove();
+  //   }
+  // },
   mounted() {
     // window.onbeforeunload = function () {
     //   var storage = window.localStorage;

@@ -5,14 +5,28 @@
     <div class="content-box" :class="{ 'content-collapse': collapse }">
       <v-tags class="hidden-sm-and-down"></v-tags>
       <div class="content">
+        <!-- <router-view v-slot="{ Component }">
+          <transition
+            mode="out-in"
+            enter-active-class="animated fadeIn"
+            leave-active-class="animated fadeOut"
+          >
+            <keep-alive :include="tagsList">
+              <component :is="Component" />
+            </keep-alive>
+          </transition>
+        </router-view> -->
+
         <router-view v-slot="{ Component }">
-          <transition name="move" mode="out-in">
+          <transition
+            mode="out-in"
+            enter-active-class="animate__animated animate__fadeIn"
+          >
             <keep-alive :include="tagsList">
               <component :is="Component" />
             </keep-alive>
           </transition>
         </router-view>
-        <!-- <el-backtop target=".content"></el-backtop> -->
       </div>
     </div>
   </div>

@@ -3,10 +3,19 @@
     <div class="handle-box">
       <el-row :gutter="20">
         <el-col :span="6">
-          <el-input placeholder="用户名" v-model="lineName" class="handle-input mr10"></el-input>
+          <el-input
+            placeholder="用户名"
+            v-model="lineName"
+            class="handle-input mr10"
+          ></el-input>
         </el-col>
         <el-col :span="6">
-          <el-input placeholder="手机号" maxlength="11" v-model="phone" class="handle-input mr10"></el-input>
+          <el-input
+            placeholder="手机号"
+            maxlength="11"
+            v-model="phone"
+            class="handle-input mr10"
+          ></el-input>
         </el-col>
         <el-col :span="6">
           <el-select v-model="vipTvpeValue" placeholder="请选择">
@@ -19,13 +28,24 @@
           </el-select>
         </el-col>
         <el-col :span="6">
-          <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
-          <el-button type="primary" icon="el-icon-refresh-left" @click="searchAll">全部</el-button>
+          <el-button type="primary" icon="el-icon-search" @click="search"
+            >搜索</el-button
+          >
+          <el-button
+            type="primary"
+            icon="el-icon-refresh-left"
+            @click="searchAll"
+            >全部</el-button
+          >
         </el-col>
       </el-row>
     </div>
     <el-table :data="supplementary_list" style="width: 100%">
-      <el-table-column prop="lineName" label="用户名称" width="120px"></el-table-column>
+      <el-table-column
+        prop="lineName"
+        label="用户名称"
+        width="120px"
+      ></el-table-column>
       <el-table-column label="用户头像">
         <template #default="scope">
           <div class="demo-image">
@@ -42,29 +62,49 @@
       <el-table-column prop="userAddress" label="位置" width="100px">
         <template #default="scope">
           <div v-if="!scope.row.userAddress">无</div>
-          <div v-else>{{scope.row.userAddress}}</div>
+          <div v-else>{{ scope.row.userAddress }}</div>
         </template>
       </el-table-column>
       <el-table-column prop="dateTime" label="注册时间"></el-table-column>
       <el-table-column label="会员状态" width="100px">
         <template #default="scope">
-          <el-tag v-if="scope.row.lineStatus === '00'" type="primary" disable-transitions>正常</el-tag>
+          <el-tag
+            v-if="scope.row.lineStatus === '00'"
+            type="primary"
+            disable-transitions
+            >正常</el-tag
+          >
           <el-tag v-else type="danger" disable-transitions>已删除</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="vip状态" width="100px">
         <template #default="scope">
-          <el-tag v-if="scope.row.vipType === 'General'" type="info" disable-transitions>未开通</el-tag>
+          <el-tag
+            v-if="scope.row.vipType === 'General'"
+            type="info"
+            disable-transitions
+            >未开通</el-tag
+          >
           <el-tag v-else type="primary" disable-transitions>已开通</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="开通会员">
         <template #default="scope">
           <template v-if="scope.row.vipType === 'General'">
-            <el-button type="success" size="small" @click="openMember(true,scope.row)">开通</el-button>
+            <el-button
+              type="success"
+              size="small"
+              @click="openMember(true, scope.row)"
+              >开通</el-button
+            >
           </template>
           <template v-else>
-            <el-button type="primary" size="small" @click="openMember(false,scope.row)">关闭</el-button>
+            <el-button
+              type="primary"
+              size="small"
+              @click="openMember(false, scope.row)"
+              >关闭</el-button
+            >
           </template>
         </template>
       </el-table-column>
@@ -172,7 +212,7 @@ export default {
       if (result.result.code.code == "0000") {
         this.supplementary_listActions({
           lineName: this.lineName,
-          vipType: "",
+          vipType: this.vipTvpeValue,
           phone: this.phone,
           inviteUser: "",
           userAddress: "",
